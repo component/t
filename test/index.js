@@ -13,3 +13,12 @@ describe('t(str)', function(){
       .should.equal('Tobi is 2 year(s) old');
   })
 })
+
+describe('t.lang()', function(){
+  it('should utilize language definitions', function(){
+    t.es = { 'Hello {name}': 'Hola {name}' };
+    t.lang('es');
+    t.lang().should.equal('es');
+    t('Hello {name}', { name: 'Tobi' }).should.equal('Hola Tobi');
+  })
+})

@@ -1,9 +1,15 @@
 
 /**
+ * Current language.
+ */
+
+var lang = 'en';
+
+/**
  * Expose `t`.
  */
 
-module.exports = t;
+exports = module.exports = t;
 
 /**
  * Translate the given `str` with substitions
@@ -17,7 +23,21 @@ module.exports = t;
 
 function t(str, obj){
   obj = obj || {};
+  if (t[lang]) str = t[lang][str] || str;
   return str.replace(/\{([^}]+)\}/g, function(_, name){
     return obj[name] || _;
   });
 }
+
+/**
+ * Get / set language `code`.
+ *
+ * @param {String} code
+ * @return {String}
+ * @api public
+ */
+
+exports.lang = function(code){
+  if (0 == arguments.length) return lang;
+  lang = code;
+};
