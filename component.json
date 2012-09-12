@@ -3,7 +3,7 @@
   "repo": "component/t",
   "description": "tiny translation helper",
   "version": "0.0.1",
-  "keywords": [],
+  "keywords": ["translate", "i18n", "internationalization", "gettext"],
   "dependencies": {},
   "development": {},
   "scripts": [
