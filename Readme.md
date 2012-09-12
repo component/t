@@ -49,3 +49,8 @@ t.lang('es');
 t('Hello {name}', { name: 'Tobi' }).should.equal('Hola Tobi');
 // => "Hola Tobi"
 ```
+
+# License
+
+  MIT
+
