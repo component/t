@@ -44,7 +44,6 @@ t.es = {
 t('Hello {name}', { name: 'Tobi' });
 // => "Hello Tobi"
 
-
 t.lang('es');
 t('Hello {name}', { name: 'Tobi' }).should.equal('Hola Tobi');
 // => "Hola Tobi"
