@@ -11,5 +11,9 @@
   },
   "scripts": [
     "index.js"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/component/t.git"
+  }
 }
