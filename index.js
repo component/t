@@ -3,7 +3,7 @@
  * Current language.
  */
 
-var lang = 'en';
+var _lang = 'en';
 
 /**
  * Expose `t`.
@@ -13,16 +13,24 @@ exports = module.exports = t;
 
 /**
  * Translate the given `str` with substitions
- * provided in `obj`.
+ * provided in `obj` using language `lang`.
  *
  * @param {String} str
- * @param {Object} obj
+ * @param {Object} [obj]
+ * @param {String} [lang]
  * @return {String}
  * @api public
  */
 
-function t(str, obj){
-  obj = obj || {};
+function t(str, obj, lang){
+  if ('string' == typeof obj) {
+    lang = obj;
+    obj = {};
+  }
+  else {
+    obj = obj || {};
+  }
+  lang = lang || _lang;
   if (t[lang]) str = t[lang][str] || str;
   return str.replace(/\{([^}]+)\}/g, function(_, name){
     return obj[name] || _;
@@ -38,6 +46,6 @@ function t(str, obj){
  */
 
 exports.lang = function(code){
-  if (0 == arguments.length) return lang;
-  lang = code;
+  if (0 == arguments.length) return _lang;
+  _lang = code;
 };
