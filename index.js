@@ -25,7 +25,7 @@ function t(str, obj){
   obj = obj || {};
   if (t[lang]) str = t[lang][str] || str;
   return str.replace(/\{([^}]+)\}/g, function(_, name){
-    return obj[name] || _;
+    return (name in obj) ? obj[name] : _;
   });
 }
 
