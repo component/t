@@ -12,6 +12,10 @@ describe('t(str)', function(){
     t('{name} is {age} year(s) old', { name: 'Tobi', age: 2 })
       .should.equal('Tobi is 2 year(s) old');
   })
+
+  it('should work with falsy values', function () {
+    t('"{string}",{number}', {string: '', number: 0}).should.eql('"",0');
+  })
 })
 
 describe('t.lang()', function(){
