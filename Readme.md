@@ -9,10 +9,10 @@
 
 ## API
 
-### t(string, [object])
+### t(string, [object], [lang])
 
   Return a translatable `string`, with optional
-  substitutions keyed in `object`.
+  substitutions keyed in `object` using language `lang`.
 
 ```js
 var t = require('t');
