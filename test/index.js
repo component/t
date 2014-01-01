@@ -11,6 +11,8 @@ describe('t(str)', function(){
     t('Hello {name}').should.equal('Hello {name}');
     t('{name} is {age} year(s) old', { name: 'Tobi', age: 2 })
       .should.equal('Tobi is 2 year(s) old');
+    t('{name.first} is from {name.last}\'s family.', { name: { first: 'Tobi', last: 'Goldman' } })
+      .should.equal('Tobi is from Goldman\'s family.');
   })
 
   it('should work with falsy values', function () {

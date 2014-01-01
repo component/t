@@ -25,7 +25,8 @@ function t(str, obj){
   obj = obj || {};
   if (t[lang]) str = t[lang][str] || str;
   return str.replace(/\{([^}]+)\}/g, function(_, name){
-    return (name in obj) ? obj[name] : _;
+    var value = get(name, obj);
+    return typeof value !== 'undefined' ? value : _;
   });
 }
 
@@ -41,3 +42,16 @@ exports.lang = function(code){
   if (0 == arguments.length) return lang;
   lang = code;
 };
+
+/**
+ * Get Object's path value
+ *
+ * @param {String} path
+ * @param {Object} obj
+ * @return {Mixed}
+ * @api private
+ */
+
+function get (path, obj) {
+  return new Function('_', 'return _.' + path)(obj);
+}
