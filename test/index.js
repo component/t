@@ -21,14 +21,14 @@ describe('t(str)', function(){
 
   it('should utilize language definitions', function(){
     t.es = { 'Hello': 'Hola' };
-    t.lang().should.equal('en');
     t('Hello', 'es').should.equal('Hola');
+    t.lang().should.equal('en');
   })
 
   it('should replace tokens and utilize language definitions', function(){
     t.es = { 'Hello {name}': 'Hola {name}' };
-    t.lang().should.equal('en');
     t('Hello {name}', { name: 'Tobi' }, 'es').should.equal('Hola Tobi');
+    t.lang().should.equal('en');
   })
 })
 
