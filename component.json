@@ -2,7 +2,7 @@
   "name": "t",
   "repo": "component/t",
   "description": "tiny translation helper",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": ["translate", "i18n", "internationalization", "gettext"],
   "dependencies": {},
   "development": {},
