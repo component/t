@@ -8,7 +8,6 @@ describe('t(str)', function(){
 
   it('should replace tokens', function(){
     t('Hello {name}', { name: 'Tobi' }).should.equal('Hello Tobi');
-    t('Hello {name}').should.equal('Hello {name}');
     t('{name} is {age} year(s) old', { name: 'Tobi', age: 2 })
       .should.equal('Tobi is 2 year(s) old');
     t('{name.first} is from {name.last}\'s family.', { name: { first: 'Tobi', last: 'Goldman' } })
@@ -17,6 +16,12 @@ describe('t(str)', function(){
 
   it('should work with falsy values', function () {
     t('"{string}",{number}', {string: '', number: 0}).should.eql('"",0');
+  })
+
+  it('should ignore undefined tokens', function () {
+    t('Hello {name}').should.equal('Hello {name}');
+    t('Hello {name}, this is odd syntax: {...}', { name: 'Tobi' })
+      .should.equal('Hello Tobi, this is odd syntax: {...}');
   })
 
   it('should only tokenize innermost brackets', function() {

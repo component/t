@@ -60,6 +60,10 @@ exports.lang = function(code){
  */
 
 function get (path, obj) {
-  return new Function('_', 'return _.' + path)(obj);
+  try {
+    return new Function('_', 'return _.' + path)(obj);
+  } catch (e) {
+    return obj[path];
+  }
 }
 
