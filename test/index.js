@@ -19,6 +19,11 @@ describe('t(str)', function(){
     t('"{string}",{number}', {string: '', number: 0}).should.eql('"",0');
   })
 
+  it('should only tokenize innermost brackets', function() {
+    t('Hello {name}: function () { console.log("Hello {name}"); }', { name: 'Tobi' })
+      .should.equal('Hello Tobi: function () { console.log("Hello Tobi"); }');
+  })
+
   it('should utilize language definitions', function(){
     t.es = { 'Hello': 'Hola' };
     t('Hello', 'es').should.equal('Hola');
