@@ -31,7 +31,7 @@ function t(str, obj, lang){
   }
   lang = lang || _lang;
   if (t[lang]) str = t[lang][str] || str;
-  return str.replace(/\{([^}]+)\}/g, function(_, name){
+  return str.replace(/\{([^{}}]+)\}/g, function(_, name){
     var value = get(name, obj);
     return typeof value !== 'undefined' ? value : _;
   });
@@ -60,6 +60,10 @@ exports.lang = function(code){
  */
 
 function get (path, obj) {
-  return new Function('_', 'return _.' + path)(obj);
+  try {
+    return new Function('_', 'return _.' + path)(obj);
+  } catch (e) {
+    return obj[path];
+  }
 }
 
