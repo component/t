@@ -31,10 +31,8 @@ function t(str, obj, lang){
   }
   lang = lang || _lang;
   if (t[lang]) str = t[lang][str] || str;
-  return str.replace(/\{([^{}}]+)\}/g, function(_, name){
-    var value = get(name, obj);
-    return typeof value !== 'undefined' ? value : _;
-  });
+  if (!cache[str]) cache[str] = makeFunction(str);
+  return cache[str](obj);
 }
 
 /**
@@ -51,19 +49,43 @@ exports.lang = function(code){
 };
 
 /**
- * Get Object's path value
+ * A cache for already generated functions
+ */
+var cache = {};
+
+/**
+ * Generate a reusable function from a string
  *
- * @param {String} path
- * @param {Object} obj
- * @return {Mixed}
+ * @param {String} str
+ * @return {Function}
  * @api private
  */
-
-function get (path, obj) {
-  try {
-    return new Function('_', 'return _.' + path)(obj);
-  } catch (e) {
-    return obj[path];
-  }
+function makeFunction(str) {
+	var split = str.split(/(\{)([^{}}]+)\}/g);
+	var tries = [];
+	var exprs = [];
+	for (var i = 0; i < split.length; i++) {
+		var path = split[i];
+		if (path === '{') {
+			path = split[++i];
+			var expr;
+			var orig = JSON.stringify(path);
+			try {
+				new Function('_', 'return _.' + path);
+				tries.push('var val' + i + ' = _.' + path);
+				expr = 'val' + i;
+			} catch (e) {
+				expr = '_[' + orig + ']';
+			}
+			orig = '"{' + orig.substring(1, orig.length - 1) + '}"';
+			exprs.push('(val = ' + expr + ', typeof val !== "undefined" ? val : ' + orig + ')');
+			continue;
+		}
+		exprs.push(JSON.stringify(path));
+	}
+	if (tries.length) {
+		tries = 'try { ' + tries.join('; } catch (e) {}\ntry { ') + '; } catch (e) {}';
+	}
+	return new Function('_', 'var val;\n' + tries + '\nreturn [\n  ' + exprs.join(',\n  ') + '\n].join("");');
 }
 

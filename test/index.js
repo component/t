@@ -18,10 +18,18 @@ describe('t(str)', function(){
     t('"{string}",{number}', {string: '', number: 0}).should.eql('"",0');
   })
 
+  it('should support array lookup', function () {
+    t('{1}, {0}', ['first', 'second']).should.eql('second, first');
+  })
+
+  it('should support special chars', function () {
+    t('{white space punction :-)}', {'white space punction :-)': 'foo'}).should.eql('foo');
+  });
+
   it('should ignore undefined tokens', function () {
     t('Hello {name}').should.equal('Hello {name}');
-    t('Hello {name}, this is odd syntax: {...}', { name: 'Tobi' })
-      .should.equal('Hello Tobi, this is odd syntax: {...}');
+    t('Hello {name}, this is odd syntax: {...}, this is a sub-object: {foo.bar}', { name: 'Tobi' })
+      .should.equal('Hello Tobi, this is odd syntax: {...}, this is a sub-object: {foo.bar}');
   })
 
   it('should only tokenize innermost brackets', function() {
